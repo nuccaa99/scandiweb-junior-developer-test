@@ -77,6 +77,11 @@ nav {
   justify-content: space-evenly;
 }
 
+.product_card:hover {
+  cursor: pointer;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
 .product_card_img {
   width: 100%;
   height: 80%;
@@ -94,6 +99,19 @@ nav {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.add_to_cart {
+  font-size: .8em;
+  color: white;
+  padding: 15px;
+  border-radius: 50%;
+  background-color: var(--spotlight-txt-color);
+  position: absolute;
+  top: 80%;
+  left: 85%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 /* currency dropdown */

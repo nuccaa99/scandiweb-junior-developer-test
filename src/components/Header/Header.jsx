@@ -2,7 +2,7 @@ import React from 'react';
 
 import logo from '../../assets/logo.png';
 import cart from '../../assets/cart-logo.png';
-import CurrenctDropdown from './CurrencyDropdown';
+import CurrencyDropdown from './CurrencyDropdown';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 function Header({ categories }) {
@@ -15,7 +15,7 @@ function Header({ categories }) {
           {categories.map((category) => (
             <NavLink
               activeclassname="active"
-              to={`/${category.name}`}
+              to={`category/${category.name}`}
               className="header_list_item"
               key={category.name}
             >
@@ -31,7 +31,7 @@ function Header({ categories }) {
         onClick={() => navigate('/')}
       />
       <div className="currency_cart_wrapper">
-        <CurrenctDropdown />
+        <CurrencyDropdown />
         <img src={cart} alt="cart-logo" />
       </div>
     </div>

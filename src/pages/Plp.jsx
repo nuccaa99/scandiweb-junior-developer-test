@@ -12,6 +12,7 @@ function Plp() {
   const { loading, error, data } = useQuery(GET_PRODUCTS, {
     variables: { category },
   });
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
@@ -20,7 +21,7 @@ function Plp() {
       <h1 className="products_category_title">{category}</h1>
       <div className="products_cards_container">
         {data.category.products.map((product) => (
-          <Product product={product} key={product.id} />
+          <Product product={product} key={product.id} category={category} />
         ))}
       </div>
     </div>

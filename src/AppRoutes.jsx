@@ -12,17 +12,18 @@ const AppRoutes = ({ initialCategory }) => {
             <Route
               key={route.path}
               path={route.path}
-              element={<Navigate to={`/${initialCategory}`} />}
+              element={<Navigate to={`category/${initialCategory}`} />}
+            />
+          );
+        } else {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={<route.Component />}
             />
           );
         }
-        return (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={<route.Component />}
-          />
-        );
       })}
     </Routes>
   );

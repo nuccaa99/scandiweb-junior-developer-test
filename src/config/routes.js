@@ -1,5 +1,6 @@
 import appRoutes from '../constants/routes';
 import Plp from '../pages/Plp';
+import Pdp from '../pages/Pdp';
 
 const routes = [
   {
@@ -9,6 +10,10 @@ const routes = [
   {
     path: appRoutes.category,
     Component: Plp,
+  },
+  {
+    path: appRoutes.product,
+    Component: Pdp,
   },
 ];
 
