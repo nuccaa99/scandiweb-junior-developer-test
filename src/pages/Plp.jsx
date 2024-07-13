@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 
 import Product from '../components/Product/Product';
 
+import { ColorRing } from 'react-loader-spinner';
+
 function Plp() {
   const { category } = useParams();
 
@@ -13,7 +15,19 @@ function Plp() {
     variables: { category },
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="loader_container">
+        <ColorRing
+          className="loader"
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+      </div>
+    );
   if (error) return <p>Error</p>;
 
   return (

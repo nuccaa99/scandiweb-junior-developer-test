@@ -6,12 +6,26 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 import { useCurrency } from '../../context/CurrencyContext';
 
+import { ColorRing } from 'react-loader-spinner';
+
 function CurrencyDropdown() {
   const { currCurrency, setCurrCurrency, isOpen, setIsOpen } = useCurrency();
 
   const { loading, error, data } = useQuery(GET_CURRENCIES);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="loader_container">
+        <ColorRing
+          className="loader"
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+      </div>
+    );
   if (error) return <p>Error</p>;
 
   const handleCurrChange = () => {

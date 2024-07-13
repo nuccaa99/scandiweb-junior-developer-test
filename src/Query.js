@@ -46,11 +46,36 @@ export const GET_PRODUCT_INFO = gql`
       gallery
       brand
       description
+      inStock
       prices {
         currency {
           symbol
         }
         amount
+      }
+      attributes {
+        id
+      }
+      attributes {
+        name
+      }
+      attributes {
+        type
+      }
+      attributes {
+        items {
+          value
+        }
+      }
+      attributes {
+        items {
+          id
+        }
+      }
+      attributes {
+        items {
+          displayValue
+        }
       }
     }
   }
