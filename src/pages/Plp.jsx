@@ -35,7 +35,7 @@ function Plp() {
       <h1 className="products_category_title">{category}</h1>
       <div className="products_cards_container">
         {data.category.products.map((product) => (
-          <Product product={product} key={product.id} category={category} />
+          <Product product={product} key={product.id} />
         ))}
       </div>
     </div>

@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import logo from '../../assets/logo.png';
-import cart from '../../assets/cart-logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+
 import CurrencyDropdown from './CurrencyDropdown';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { FavContext } from '../../context/Favs';
+import { CartContext } from '../../context/Cart';
+
 function Header({ categories }) {
   const navigate = useNavigate();
+
+  const { favItems } = useContext(FavContext);
+  const { getCartCount } = useContext(CartContext);
+
+  console.log(getCartCount);
 
   return (
     <div className="header_container">
@@ -32,7 +43,19 @@ function Header({ categories }) {
       />
       <div className="currency_cart_wrapper">
         <CurrencyDropdown />
-        <img src={cart} alt="cart-logo" />
+
+        <div className="carts_container">
+          <FontAwesomeIcon icon={faCartShopping} />
+          {getCartCount() ? (
+            <p className="count carts">{getCartCount()}</p>
+          ) : null}
+        </div>
+        <NavLink className="favs_container" to={'/favourites'}>
+          <FontAwesomeIcon icon={faHeart} />
+          {favItems.length ? (
+            <p className="count favs">{favItems.length}</p>
+          ) : null}
+        </NavLink>
       </div>
     </div>
   );

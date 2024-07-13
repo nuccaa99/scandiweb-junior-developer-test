@@ -4,11 +4,13 @@ import Header from './components/Header/Header';
 import AppRoutes from './AppRoutes';
 
 import { CurrencyProvider } from './context/CurrencyContext';
+import { CartProvider } from './context/Cart';
 
 import { GET_CATEGORIES } from './Query';
 import { useQuery } from '@apollo/client';
 
 import { ColorRing } from 'react-loader-spinner';
+import { FavProvider } from './context/Favs';
 
 function App() {
   const { loading, error, data } = useQuery(GET_CATEGORIES);
@@ -31,8 +33,12 @@ function App() {
   return (
     <div className="App">
       <CurrencyProvider>
-        <Header categories={data.categories} />
-        <AppRoutes initialCategory={data.categories[0].name} />
+        <CartProvider>
+          <FavProvider>
+            <Header categories={data.categories} />
+            <AppRoutes initialCategory={data.categories[0].name} />
+          </FavProvider>
+        </CartProvider>
       </CurrencyProvider>
     </div>
   );

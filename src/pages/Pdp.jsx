@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GET_PRODUCT_INFO } from '../Query';
 import { useQuery } from '@apollo/client';
 
@@ -7,11 +7,17 @@ import { useCurrency } from '../context/CurrencyContext';
 import { useParams } from 'react-router-dom';
 
 import { ColorRing } from 'react-loader-spinner';
+import { CartContext } from '../context/Cart';
 
 function Pdp() {
   const { currCurrency } = useCurrency();
+  const { cartItems, addToCart } = useContext(CartContext);
+  console.log(cartItems);
+
+  const [selectedAttributes, setSelectedAttributes] = useState({});
 
   const [spotlightImg, setSpotlightImg] = useState('');
+  const [selectMsg, setSelectMsg] = useState('');
 
   const { id } = useParams();
 
@@ -25,7 +31,40 @@ function Pdp() {
     }
   }, [data]);
 
-  console.log(data);
+  const handleAttributeSelect = (attId, itemId) => {
+    setSelectedAttributes({
+      ...selectedAttributes,
+      [attId]: itemId,
+    });
+  };
+
+  const areAllAttributesSelected = () => {
+    if (!data || !data.product || !data.product.attributes) {
+      return false;
+    }
+    return data.product.attributes.every((att) => selectedAttributes[att.id]);
+  };
+
+  const getUniqueId = () => {
+    const attributesString = Object.entries(selectedAttributes)
+      .map(([key, value]) => `${key}-${value}`)
+      .join('-');
+    return `${id}-${attributesString}`;
+  };
+
+  const handleAddToCart = () => {
+    if (areAllAttributesSelected()) {
+      const uniqueId = getUniqueId();
+      addToCart({
+        ...data.product,
+        id: uniqueId,
+        selectedAttributes,
+      });
+    } else {
+      setSelectMsg('Please select all attributes.');
+    }
+  };
+
   if (loading)
     return (
       <div className="loader_container">
@@ -79,16 +118,29 @@ function Pdp() {
                 {att.items.map((item) => {
                   if (att.type !== 'swatch') {
                     return (
-                      <button className="attribute" key={item.id}>
+                      <button
+                        className={`attribute ${
+                          selectedAttributes[att.id] === item.id
+                            ? 'selected'
+                            : ''
+                        }`}
+                        key={item.id}
+                        onClick={() => handleAttributeSelect(att.id, item.id)}
+                      >
                         {item.value}
                       </button>
                     );
                   } else {
                     return (
                       <button
-                        key={item.id}
                         style={{ background: item.value }}
-                        className="attribute swatch"
+                        className={`attribute swatch ${
+                          selectedAttributes[att.id] === item.id
+                            ? 'selected'
+                            : ''
+                        }`}
+                        key={item.id}
+                        onClick={() => handleAttributeSelect(att.id, item.id)}
                       ></button>
                     );
                   }
@@ -112,8 +164,14 @@ function Pdp() {
             return null;
           })}
         </div>
+        <p className="select_msg">{selectMsg}</p>
         {data.product.inStock ? (
-          <button className="btn product_page_add_to_cart">add to cart</button>
+          <button
+            className="btn product_page_add_to_cart"
+            onClick={() => handleAddToCart()}
+          >
+            add to cart
+          </button>
         ) : (
           <button className="btn product_page_add_to_cart out_of_stock">
             out of stock
