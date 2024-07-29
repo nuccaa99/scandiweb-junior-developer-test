@@ -17,10 +17,8 @@ function Header({ categories }) {
   const { favItems } = useContext(FavContext);
   const { getCartCount } = useContext(CartContext);
 
-  console.log(getCartCount);
-
   return (
-    <div className="header_container">
+    <header className="header_container">
       <nav>
         <ul className="header_list">
           {categories.map((category) => (
@@ -44,12 +42,12 @@ function Header({ categories }) {
       <div className="currency_cart_wrapper">
         <CurrencyDropdown />
 
-        <div className="carts_container">
+        <NavLink className="carts_container" to={'/cart'}>
           <FontAwesomeIcon icon={faCartShopping} />
           {getCartCount() ? (
             <p className="count carts">{getCartCount()}</p>
           ) : null}
-        </div>
+        </NavLink>
         <NavLink className="favs_container" to={'/favourites'}>
           <FontAwesomeIcon icon={faHeart} />
           {favItems.length ? (
@@ -57,7 +55,7 @@ function Header({ categories }) {
           ) : null}
         </NavLink>
       </div>
-    </div>
+    </header>
   );
 }
 

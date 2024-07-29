@@ -4,6 +4,7 @@ import { useCurrency } from '../../context/CurrencyContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import { FavContext } from '../../context/Favs';
 
@@ -14,7 +15,7 @@ function Product({ product, location }) {
   const { addToFav, removeFromFav } = useContext(FavContext);
 
   useEffect(() => {
-    const storedIsFav = localStorage.getItem(`product-${product.id}-isFav`);
+    const storedIsFav = sessionStorage.getItem(`product-${product.id}-isFav`);
     if (storedIsFav !== null) {
       setIsFav(JSON.parse(storedIsFav));
     }
@@ -23,7 +24,7 @@ function Product({ product, location }) {
   const toggleFav = () => {
     const newIsFav = !isFav;
     setIsFav(newIsFav);
-    localStorage.setItem(
+    sessionStorage.setItem(
       `product-${product.id}-isFav`,
       JSON.stringify(newIsFav)
     );
@@ -65,7 +66,7 @@ function Product({ product, location }) {
           return null;
         })}
       </NavLink>
-      {location !== '/favourites' ? (
+      {location !== '/favourites' && location !== '/cart' ? (
         <FontAwesomeIcon
           icon={faHeart}
           className={isFav ? 'add_to_fav' : 'add_to_fav not_fav'}
@@ -73,7 +74,15 @@ function Product({ product, location }) {
             toggleFav();
           }}
         />
-      ) : null}
+      ) : (
+        <FontAwesomeIcon
+          icon={faMinus}
+          className="delete_from_fav"
+          onClick={() => {
+            toggleFav();
+          }}
+        />
+      )}
     </div>
   );
 }

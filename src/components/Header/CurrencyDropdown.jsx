@@ -3,6 +3,7 @@ import { GET_CURRENCIES } from '../../Query';
 import { useQuery } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 import { useCurrency } from '../../context/CurrencyContext';
 
@@ -39,7 +40,11 @@ function CurrencyDropdown() {
         onClick={() => handleCurrChange()}
       >
         <p>{currCurrency}</p>
-        <FontAwesomeIcon icon={faAngleDown} />
+        {isOpen ? (
+          <FontAwesomeIcon icon={faAngleUp} />
+        ) : (
+          <FontAwesomeIcon icon={faAngleDown} />
+        )}
       </div>
       <ul
         className={isOpen ? 'currency_drop_list' : 'currency_drop_list hidden'}

@@ -13,7 +13,6 @@ function Pdp() {
   const { currCurrency } = useCurrency();
   const { cartItems, addToCart } = useContext(CartContext);
   console.log(cartItems);
-
   const [selectedAttributes, setSelectedAttributes] = useState({});
 
   const [spotlightImg, setSpotlightImg] = useState('');

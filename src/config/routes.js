@@ -2,6 +2,7 @@ import appRoutes from '../constants/routes';
 import Plp from '../pages/Plp';
 import Pdp from '../pages/Pdp';
 import Favs from '../pages/Favs';
+import Cart from '../pages/Cart';
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
   {
     path: appRoutes.favourites,
     Component: Favs,
+  },
+  {
+    path: appRoutes.cart,
+    Component: Cart,
   },
 ];
 

@@ -11,9 +11,15 @@ function Favs() {
 
   return (
     <div className="fav_items_container">
-      {favItems.map((item) => {
-        return <Product product={item} key={item.id} location={currentPath} />;
-      })}
+      {favItems.length ? (
+        favItems.map((item) => {
+          return (
+            <Product product={item} key={item.id} location={currentPath} />
+          );
+        })
+      ) : (
+        <p>You don't have any favourites</p>
+      )}
     </div>
   );
 }

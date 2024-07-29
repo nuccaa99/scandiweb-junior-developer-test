@@ -4,8 +4,8 @@ export const FavContext = createContext();
 
 export const FavProvider = ({ children }) => {
   const [favItems, setFavItems] = useState(
-    localStorage.getItem('favItems')
-      ? JSON.parse(localStorage.getItem('favItems'))
+    sessionStorage.getItem('favItems')
+      ? JSON.parse(sessionStorage.getItem('favItems'))
       : []
   );
 
@@ -25,11 +25,11 @@ export const FavProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    localStorage.setItem('favItems', JSON.stringify(favItems));
+    sessionStorage.setItem('favItems', JSON.stringify(favItems));
   }, [favItems]);
 
   useEffect(() => {
-    const favItems = localStorage.getItem('favItems');
+    const favItems = sessionStorage.getItem('favItems');
     if (favItems) {
       setFavItems(JSON.parse(favItems));
     }
