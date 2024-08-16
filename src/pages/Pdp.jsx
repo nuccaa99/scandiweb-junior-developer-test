@@ -11,8 +11,8 @@ import { CartContext } from '../context/Cart';
 
 function Pdp() {
   const { currCurrency } = useCurrency();
-  const { cartItems, addToCart } = useContext(CartContext);
-  console.log(cartItems);
+  const { addToCart } = useContext(CartContext);
+
   const [selectedAttributes, setSelectedAttributes] = useState({});
 
   const [spotlightImg, setSpotlightImg] = useState('');
@@ -56,7 +56,7 @@ function Pdp() {
       const uniqueId = getUniqueId();
       addToCart({
         ...data.product,
-        id: uniqueId,
+        uniqueId,
         selectedAttributes,
       });
     } else {

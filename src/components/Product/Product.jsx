@@ -66,7 +66,7 @@ function Product({ product, location }) {
           return null;
         })}
       </NavLink>
-      {location !== '/favourites' && location !== '/cart' ? (
+      {location !== '/favourites' ? (
         <FontAwesomeIcon
           icon={faHeart}
           className={isFav ? 'add_to_fav' : 'add_to_fav not_fav'}

@@ -1,8 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital@0;1&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital@0;1&display=swap');
 
 :root {
   --spotlight-txt-color: #5ece7b;
   --red: #ce5e64;
-  --font-family: "Raleway", sans-serif;
+  --font-family: 'Raleway', sans-serif;
   --txt-color: #1d1f22;
+  --scroll-color: #bfd2c7;
+  --border-color: rgba(110, 118, 131, 0.3);
 }
