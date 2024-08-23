@@ -7,12 +7,15 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { CartContext } from '../../context/Cart';
+import { FavContext } from '../../context/Favs';
+
 
 function CartProduct({ product }) {
-  console.log(product);
   const { currCurrency } = useCurrency();
 
   const { removeFromCart } = useContext(CartContext);
+
+  const { addToFav } = useContext(FavContext)
 
   const handleNavLinkClick = (e) => {
     e.preventDefault();
@@ -29,11 +32,14 @@ function CartProduct({ product }) {
         <FontAwesomeIcon
           icon={faMinus}
           className="cart_product_card_delete"
-          onClick={removeFromCart(product)}
-        />
+          onClick={() => removeFromCart(product)} />
         <FontAwesomeIcon
           icon={faHeart}
           className="cart_product_card_add_to_favs"
+          onClick={() => {
+            addToFav(product)
+            removeFromCart(product)
+          }}
         />
       </div>
       <NavLink to={`/product/${product.id}`} className="cart_product_card">
@@ -66,11 +72,10 @@ function CartProduct({ product }) {
                     if (att.type !== 'swatch') {
                       return (
                         <button
-                          className={`attribute ${
-                            product.selectedAttributes[att.id] === item.id
-                              ? 'selected'
-                              : ''
-                          }`}
+                          className={`attribute ${product.selectedAttributes[att.id] === item.id
+                            ? 'selected'
+                            : ''
+                            }`}
                           key={item.id}
                         >
                           {item.value}
@@ -79,11 +84,10 @@ function CartProduct({ product }) {
                     } else {
                       return (
                         <button
-                          className={`attribute swatch ${
-                            product.selectedAttributes[att.id] === item.id
-                              ? 'selected'
-                              : ''
-                          }`}
+                          className={`attribute swatch ${product.selectedAttributes[att.id] === item.id
+                            ? 'selected'
+                            : ''
+                            }`}
                           style={{ background: item.value }}
                           key={item.id}
                         ></button>
