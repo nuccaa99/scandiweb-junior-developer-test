@@ -118,11 +118,10 @@ function Pdp() {
                   if (att.type !== 'swatch') {
                     return (
                       <button
-                        className={`attribute ${
-                          selectedAttributes[att.id] === item.id
+                        className={`attribute ${selectedAttributes[att.id] === item.id
                             ? 'selected'
                             : ''
-                        }`}
+                          }`}
                         key={item.id}
                         onClick={() => handleAttributeSelect(att.id, item.id)}
                       >
@@ -133,11 +132,10 @@ function Pdp() {
                     return (
                       <button
                         style={{ background: item.value }}
-                        className={`attribute swatch ${
-                          selectedAttributes[att.id] === item.id
+                        className={`attribute swatch ${selectedAttributes[att.id] === item.id
                             ? 'selected'
                             : ''
-                        }`}
+                          }`}
                         key={item.id}
                         onClick={() => handleAttributeSelect(att.id, item.id)}
                       ></button>

@@ -1,20 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCurrency } from '../../context/CurrencyContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../../context/Cart';
 import { FavContext } from '../../context/Favs';
 
 
 function CartProduct({ product }) {
+  const [isEditing, setIsEditing] = useState(false);
+  console.log(isEditing)
+
   const { currCurrency } = useCurrency();
 
-  const { removeFromCart } = useContext(CartContext);
+  const { addToCart, removeFromCart } = useContext(CartContext);
 
   const { addToFav, isFav, removeFromFav } = useContext(FavContext)
 
@@ -29,16 +33,20 @@ function CartProduct({ product }) {
       addToFav(product);
     }
   };
+  const handleEditClick = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
     <div className="cart_product_card_wrapper">
       <div className="cart_product_card_btn_wrapper">
         <FontAwesomeIcon
-          icon={faPenToSquare}
+          icon={isEditing ? faCheck : faPenToSquare}
           className="cart_product_card_edit"
+          onClick={handleEditClick}
         />
         <FontAwesomeIcon
-          icon={faMinus}
+          icon={faTrash}
           className="cart_product_card_delete"
           onClick={() => removeFromCart(product)} />
         <FontAwesomeIcon
@@ -64,8 +72,24 @@ function CartProduct({ product }) {
             }
             return null;
           })}
-          <p className="attribute_name cart">quantity: {product.quantity}</p>
+          <div className='quantity_container' onClick={handleNavLinkClick}>
+            <p className="attribute_name cart">quantity:</p>
 
+            {isEditing ?
+              <div className='quantity_wrapper'>
+                <button className='q_descrease attribute' onClick={() => removeFromCart(product)}>-</button>
+                <p className='quantity'>{product.quantity}</p>
+                <button className='q_increase attribute' onClick={() => addToCart(product)}>+</button>
+
+              </div>
+              :
+              <div className='quantity_wrapper'>
+                <button className='q_increase attribute hidden'>+</button>
+                <p className='quantity'>{product.quantity}</p>
+                <button className='q_descrease attribute hidden'>-</button>
+              </div>
+            }
+          </div>
           {product.attributes.map((att) => {
             return (
               <div
@@ -111,8 +135,8 @@ function CartProduct({ product }) {
           alt="product"
           className="cart_product_card_img"
         />
-      </NavLink>
-    </div>
+      </NavLink >
+    </div >
   );
 }
 

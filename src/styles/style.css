@@ -512,3 +512,21 @@ nav {
   font-size: 1.1em;
   font-weight: 700;
 }
+
+.quantity_container {
+  display: flex;
+  column-gap: 15px;
+  align-items: center;
+}
+
+.quantity_wrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.q_descrease,
+.q_increase {
+  width: 25px;
+  height: 25px;
+}
