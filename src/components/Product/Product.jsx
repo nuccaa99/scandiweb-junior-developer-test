@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useCurrency } from '../../context/CurrencyContext';
 
@@ -9,29 +9,16 @@ import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { FavContext } from '../../context/Favs';
 
 function Product({ product, location }) {
-  const [isFav, setIsFav] = useState(false);
 
   const { currCurrency } = useCurrency();
-  const { addToFav, removeFromFav } = useContext(FavContext);
+  const { addToFav, removeFromFav, isFav } = useContext(FavContext);
 
-  useEffect(() => {
-    const storedIsFav = sessionStorage.getItem(`product-${product.id}-isFav`);
-    if (storedIsFav !== null) {
-      setIsFav(JSON.parse(storedIsFav));
-    }
-  }, [product.id]);
 
   const toggleFav = () => {
-    const newIsFav = !isFav;
-    setIsFav(newIsFav);
-    sessionStorage.setItem(
-      `product-${product.id}-isFav`,
-      JSON.stringify(newIsFav)
-    );
-    if (newIsFav) {
-      addToFav({ ...product });
+    if (isFav(product.id)) {
+      removeFromFav(product);
     } else {
-      removeFromFav({ ...product });
+      addToFav(product);
     }
   };
 
@@ -69,7 +56,7 @@ function Product({ product, location }) {
       {location !== '/favourites' ? (
         <FontAwesomeIcon
           icon={faHeart}
-          className={isFav ? 'add_to_fav' : 'add_to_fav not_fav'}
+          className={isFav(product.id) ? 'add_to_fav' : 'add_to_fav not_fav'}
           onClick={() => {
             toggleFav();
           }}

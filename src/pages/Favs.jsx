@@ -12,6 +12,7 @@ function Favs() {
 
   return (
     <div className="fav_items_container">
+      <h2 className='cart_items_title'>Favs</h2>
       {favItems.length ? (
         favItems.map((item) => {
           return (
@@ -19,7 +20,7 @@ function Favs() {
           );
         })
       ) : (
-        <div>
+        <div className="empty_cart">
           <img src={emptyBasket} alt="empty cart" className="empty_cart_img" />
           <p>You don't have any favourites</p>
         </div>

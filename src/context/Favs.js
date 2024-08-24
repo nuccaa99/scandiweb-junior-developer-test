@@ -9,6 +9,10 @@ export const FavProvider = ({ children }) => {
       : []
   );
 
+  const isFav = (itemId) => {
+    return favItems.some((favItem) => favItem.id === itemId);
+  };
+
   const addToFav = (item) => {
     const isItemInFav = favItems.find((favItem) => favItem.id === item.id);
     if (!isItemInFav) {
@@ -42,6 +46,7 @@ export const FavProvider = ({ children }) => {
         addToFav,
         removeFromFav,
         clearCart,
+        isFav,
       }}
     >
       {children}

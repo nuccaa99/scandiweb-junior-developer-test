@@ -5,7 +5,8 @@ import { useCurrency } from '../../context/CurrencyContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from '../../context/Cart';
 import { FavContext } from '../../context/Favs';
 
@@ -15,11 +16,18 @@ function CartProduct({ product }) {
 
   const { removeFromCart } = useContext(CartContext);
 
-  const { addToFav } = useContext(FavContext)
+  const { addToFav, isFav, removeFromFav } = useContext(FavContext)
 
   const handleNavLinkClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+  const toggleFav = () => {
+    if (isFav(product.id)) {
+      removeFromFav(product);
+    } else {
+      addToFav(product);
+    }
   };
 
   return (
@@ -34,13 +42,11 @@ function CartProduct({ product }) {
           className="cart_product_card_delete"
           onClick={() => removeFromCart(product)} />
         <FontAwesomeIcon
-          icon={faHeart}
+          icon={isFav(product.id) ? faHeartSolid : faHeartRegular}
           className="cart_product_card_add_to_favs"
-          onClick={() => {
-            addToFav(product)
-            removeFromCart(product)
-          }}
+          onClick={toggleFav}
         />
+
       </div>
       <NavLink to={`/product/${product.id}`} className="cart_product_card">
         <div className="cart_product_card_content">
