@@ -64,6 +64,7 @@ function CartProduct({ product }) {
             }
             return null;
           })}
+          <p className="attribute_name cart">quantity: {product.quantity}</p>
 
           {product.attributes.map((att) => {
             return (

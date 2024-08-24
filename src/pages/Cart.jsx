@@ -10,7 +10,7 @@ function Cart() {
       <h2 className='cart_items_title'>Cart</h2>
       {cartItems.length ? (
         cartItems.map((item) => {
-          return <CartProduct product={item} key={item.id} />;
+          return <CartProduct product={item} key={item.uniqueId} />;
         })
       ) : (
         <div className="empty_cart">
